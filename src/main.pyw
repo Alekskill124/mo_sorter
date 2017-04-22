@@ -12,7 +12,7 @@ from file_io import *
 from mod_organizer_handler import *
 from sort import *
 
-ConfigFile = "MOSorter_config.ini"
+ConfigFile     = "MOSorter_config.ini"
 ConfigSettings = {"mo_install_path" : "None",
                   "master_profile" : "None",
                   "show_help" : "True"}
@@ -34,6 +34,11 @@ def start():
 
     ConfigSettings["master_profile"] = read_config(ConfigFile, "master_profile")
     ConfigSettings["master_profile"] = get_master_profile(ConfigSettings["master_profile"], ConfigSettings["mo_install_path"])
+
+    #Try to get master_profile from currently selected profile in MO
+    temp_profile = read_config_new(ConfigSettings["mo_install_path"] + "\\ModOrganizer.ini", "General", "selected_profile")
+    if temp_profile:
+        ConfigSettings["master_profile"] = temp_profile
 
     ConfigSettings["show_help"] = read_config(ConfigFile, "show_help")
     if not ConfigSettings["show_help"] == "False":
@@ -59,8 +64,8 @@ def start():
                     command=lambda:show_help(HelpMessage))
     help_button.pack(side=LEFT, pady=10)
 
+    # First time help
     if ConfigSettings["show_help"] == "True":
-        # First time help
         show_help(HelpMessage)
         ConfigSettings["show_help"] = "False"
 

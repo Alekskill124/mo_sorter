@@ -14,7 +14,7 @@ def equalize(master_profile_path, profile_path):
         mp_file = open(master_profile_path + "\\modlist.txt", 'r')
     except:
         message = "Your master profile is missing modlist configuration. Please reopen Mod Organizer with desired profile selected"
-        done_box = DialogBox(parent_window, message)
+        messagebox.showinfo("Info", message)
         exit()
 
     try:
@@ -24,18 +24,21 @@ def equalize(master_profile_path, profile_path):
 
     my_file = open(profile_path + "\\" + my_file_name, 'w+')
 
+    mp_file.seek(0)
     for i_mp, line_mp in enumerate(mp_file):
         if line_mp[0] != '-' and line_mp[0] != '+':
             my_file.write(line_mp)
         else:
             current_mod = line_mp[1:]
             current_sign = '-'
+
+            p_file.seek(0)
             for i_p, line_p in enumerate(p_file):
                 if current_mod in line_p:
                     current_sign = line_p[0]
                     break
+
             my_file.write(current_sign + current_mod)
-            p_file.seek(0)
 
     mp_file.close()
     p_file.close()
@@ -47,8 +50,9 @@ def equalize(master_profile_path, profile_path):
 
 def sort(mo_path, master_profile, profiles, parent_window):
     if master_profile not in profiles:
-        # TODO: Error
-        exit()
+        message = "Select valid profile!"
+        messagebox.showinfo("Info", message)
+        return
 
     profiles.remove(master_profile)
 
