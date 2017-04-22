@@ -20,3 +20,15 @@ def read_config(file_name, setting):
         result = None
 
     return result
+
+def read_config_new(file_name, section_name, setting):
+    ConfigParser = configparser.SafeConfigParser()
+    ConfigParser.add_section(section_name)
+
+    ConfigParser.read(file_name)
+    try:
+        result = ConfigParser.get(section_name, setting)
+    except configparser.NoOptionError:
+        result = None
+
+    return result
