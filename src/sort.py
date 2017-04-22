@@ -13,7 +13,8 @@ def equalize(master_profile_path, profile_path):
     try:
         mp_file = open(master_profile_path + "\\modlist.txt", 'r')
     except:
-        message = "Your master profile is missing modlist configuration. Please reopen Mod Organizer with desired profile selected"
+        message = """Your master profile is missing modlist configuration.
+                  Please reopen Mod Organizer with desired profile selected"""
         messagebox.showinfo("Info", message)
         exit()
 
