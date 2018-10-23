@@ -1,5 +1,6 @@
-# User specific config files
-MOSorter_config.ini
+
+# VS files
+.vs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
