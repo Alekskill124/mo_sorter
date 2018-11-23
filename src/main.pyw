@@ -29,9 +29,6 @@ root.iconbitmap(icon_path)
 os.remove(icon_path)
 # End of the horrible icon loading solution
 
-def show_help(message):
-    messagebox.showinfo("Help", message)
-
 def start():
 
     mo = ModOrganizer()
@@ -41,7 +38,7 @@ def start():
 
     AllProfiles = mo.get_profiles()
     if not AllProfiles:
-        show_help("You don't have any profiles!")
+        messagebox.showinfo("Error", "You don't have any profiles!")
         exit()
 
     frame = Frame(root)
@@ -57,7 +54,7 @@ def start():
     sort_button.pack()
 
     help_button = Button(frame, text="Help",
-                    command=lambda:show_help(HelpMessage))
+                    command=lambda:messagebox.showinfo("Help", message))
     help_button.pack(side=LEFT, pady=10)
 
     root.mainloop()
