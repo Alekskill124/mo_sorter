@@ -30,14 +30,19 @@ os.remove(icon_path)
 # End of the horrible icon loading solution
 
 def show_help(message):
-    messagebox.showinfo("Help", HelpMessage)
+    messagebox.showinfo("Help", message)
 
 def start():
 
-    mo_install_path = get_mo_path(True)
-    master_profile = get_master_profile(mo_install_path)
+    mo = ModOrganizer()
 
-    AllProfiles = get_profiles(mo_install_path)
+    mo_install_path = mo.get_path()
+    master_profile = mo.get_master_profile()
+
+    AllProfiles = mo.get_profiles()
+    if not AllProfiles:
+        show_help("You don't have any profiles!")
+        exit()
 
     frame = Frame(root)
     frame.pack()
