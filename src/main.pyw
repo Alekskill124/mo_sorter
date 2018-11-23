@@ -5,10 +5,11 @@ from tkinter import *
 from mod_organizer_handler import *
 from sort import *
 
-ConfigSettings = {"mo_install_path" : "None",
-                  "master_profile" : "None"}
-
+# Global variables
 AllProfiles = []
+
+mo_install_path = None
+master_profile = None
 
 # Setting up window
 root = Tk()
@@ -28,23 +29,26 @@ root.iconbitmap(icon_path)
 os.remove(icon_path)
 # End of the horrible icon loading solution
 
+def show_help(message):
+    messagebox.showinfo("Help", HelpMessage)
+
 def start():
 
-    ConfigSettings["mo_install_path"] = get_mo_path()
-    ConfigSettings["master_profile"] = get_master_profile(ConfigSettings["mo_install_path"])
+    mo_install_path = get_mo_path(True)
+    master_profile = get_master_profile(mo_install_path)
 
-    AllProfiles = get_profiles(ConfigSettings["mo_install_path"])
+    AllProfiles = get_profiles(mo_install_path)
 
     frame = Frame(root)
     frame.pack()
 
     option = StringVar(frame)
-    option.set(ConfigSettings["master_profile"])
+    option.set(master_profile)
     profile_pick = OptionMenu(frame, option, *tuple(AllProfiles))
     profile_pick.pack()
 
     sort_button = Button(frame, text="Sort Mods", fg="red", padx=40, pady=10,
-                    command=lambda:sort(ConfigSettings["mo_install_path"], option.get(), AllProfiles, root))
+                    command=lambda:sort(mo_install_path, option.get(), AllProfiles, root))
     sort_button.pack()
 
     help_button = Button(frame, text="Help",
@@ -52,9 +56,6 @@ def start():
     help_button.pack(side=LEFT, pady=10)
 
     root.mainloop()
-
-def show_help(message):
-    messagebox.showinfo("Help", HelpMessage)
 
 if __name__ == "__main__":
     start()
