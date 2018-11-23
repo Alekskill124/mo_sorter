@@ -15,7 +15,9 @@ class ModOrganizer:
     def is_valid_path(self):
         try:
             for paths, folders, files in os.walk(self.path):
-                if "ModOrganizer.exe" in files and "mods" in folders and "profiles" in folders:
+                if "ModOrganizer.exe" in files and \
+                        ("mods" in folders or "Mods" in folders) and \
+                        ("profiles" in folders or "Profiles" in folders):
                     return True
                 else:
                     return False
